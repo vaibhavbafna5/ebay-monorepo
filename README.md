@@ -18,7 +18,7 @@ To build the container and run the application locally, do the following.
 3. Run `docker-compose build` (builds the container)
 4. Run `docker-compose up` (runs the container)
 
-If all this completes successfully, navigate to http://localhost:6001/ to view the running application.'
+If all this completes successfully, navigate to http://localhost:6001/ to view the running application.
 
 Some helpful commands are listed below:
 - `docker ps -a` to show all running containers
