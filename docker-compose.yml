@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.combo
+    ports:
+      - "6001:6001"
+    container_name: ebay

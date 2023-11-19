@@ -1,0 +1,3 @@
+from ebay_helpers import write_all_products_to_spreadsheet
+
+write_all_products_to_spreadsheet()

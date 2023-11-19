@@ -1,0 +1,40 @@
+# Stage 1: Build React App
+FROM node:14 as build
+
+WORKDIR /app/frontend
+
+# Copy package.json and package-lock.json first to leverage Docker cache
+COPY frontend/package.json frontend/package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the frontend files
+COPY frontend ./
+
+# Build the React app
+RUN npm run build
+
+# Stage 2: Serve React App with Flask
+FROM python:3.9
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built React app from the previous stage to Flask's static directory
+COPY --from=build /app/frontend/build /app/backend/static
+
+# Copy Flask app files to the container
+COPY backend /app/backend
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r /app/backend/requirements3.txt
+
+# Set working directory for the backend
+WORKDIR /app/backend
+
+# Expose Flask's port
+EXPOSE 6001
+
+# Run the Flask app using Gunicorn
+CMD gunicorn -w 4 -b 0.0.0.0:6001 app:app
